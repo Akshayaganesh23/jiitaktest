@@ -28,22 +28,39 @@ class HomePage extends StatelessWidget {
           const SizedBox(width: 20)
         ],
       ),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.bottomRight,
         children: [
-          const SizedBox(height: 10),
-          _headerDate(context),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 70,
-            child: _dateListView(),
+          Column(
+            children: [
+              const SizedBox(height: 10),
+              _headerDate(context),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 70,
+                child: _dateListView(),
+              ),
+              Expanded(
+                child: _cardListView(),
+              ),
+            ],
           ),
-          Expanded(
-            child: _cardListView(),
-          ),
+        _floatingActionButton()
         ],
+
       ),
+      floatingActionButton: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(40),
+            ),
+            child: Image.asset("assets/images/scan-line.png"),
+          ),
       bottomNavigationBar: _bottomNavigationBar(context),
-      floatingActionButton: _floatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: _floatingActionButton(),
     );
   }
 
@@ -111,7 +128,7 @@ class HomePage extends StatelessWidget {
       )),
       child: const Center(
         child: Text(
-          "2022年 5月 26日（木）",
+          "2022年 5月 1日（木）",
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -134,12 +151,15 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  FloatingActionButton _floatingActionButton() {
-    return FloatingActionButton(
-      onPressed: () {},
-      backgroundColor: Colors.white,
-      shape: const CircleBorder(side: BorderSide.none),
-      child: const Icon(Icons.location_on_outlined),
+  Widget _floatingActionButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.white,
+        shape: const CircleBorder(side: BorderSide.none),
+        child: const Icon(Icons.location_on_outlined),
+      ),
     );
   }
 
@@ -173,37 +193,61 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          GestureDetector(
-            child: const Column(
-              children: [Icon(Icons.search), SizedBox(height: 5), Text("さがす")],
+          Expanded(
+            child: GestureDetector(
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.search),
+                  SizedBox(height: 5),
+                  Text("さがす")
+                ],
+              ),
             ),
           ),
-          const Column(
-            children: [
-              Icon(Icons.home_repair_service_outlined),
-              SizedBox(height: 5),
-              Text("お仕事")
-            ],
-          ),
-          const SizedBox(width: 50),
-          Column(
-            children: [
-              Image.asset("assets/images/sms_icon.png"),
-              const SizedBox(height: 5),
-              const Text("チャット")
-            ],
-          ),
-          InkWell(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const EditStoreProfilePage())),
-            child: const Column(
+          const Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.person_outline_rounded),
+                Icon(Icons.home_repair_service_outlined),
                 SizedBox(height: 5),
-                Text("マイページ")
+                Text("お仕事")
               ],
+            ),
+          ),const Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                
+                SizedBox(height: 30),
+                Text("チャット")
+              ],
+            ),
+          ),
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset("assets/images/sms_icon.png"),
+                const SizedBox(height: 5),
+                const Text("チャット")
+              ],
+            ),
+          ),
+          Expanded(
+            child: InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  EditStoreProfilePage())),
+              child: const Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.person_outline_rounded),
+                  SizedBox(height: 5),
+                  Text("マイページ")
+                ],
+              ),
             ),
           ),
         ],
